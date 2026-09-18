@@ -3,9 +3,9 @@ import { config } from 'dotenv';
 import { Site, SiteSchema } from '../src/sites/schemas/site.schema.js';
 import { Person, PersonSchema } from '../src/people/schemas/person.schema.js';
 import { Visit, VisitSchema } from '../src/visits/schemas/visit.schema.js';
-import dns from 'node:dns';
+// import dns from 'node:dns';
 
-dns.setServers(['8.8.8.8', '1.1.1.1']);
+// dns.setServers(['8.8.8.8', '1.1.1.1']);
 config();
 
 const PEOPLE = ['Ava', 'Ben', 'Cleo', 'Dax', 'Eli'];
