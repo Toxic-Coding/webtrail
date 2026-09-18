@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { Site, SiteDocument } from './schemas/site.schema.js';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
@@ -13,14 +13,22 @@ export class SitesService {
       .exec();
   }
 
-  async create(date: {
+  async create(data: {
     address: string;
     title: string;
     html: string;
     author: string;
   }): Promise<Site> {
-    const createdSite = new this.siteModel(date);
-    return createdSite.save();
+    try {
+      return await this.siteModel.create(data);
+    } catch (error: any) {
+      if (error.code === 11000) {
+        throw new ConflictException(
+          `Site with address "${data.address}" already exists.`,
+        );
+      }
+      throw error;
+    }
   }
 
   async search(query: string): Promise<Site[]> {

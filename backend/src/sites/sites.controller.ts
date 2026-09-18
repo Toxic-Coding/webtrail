@@ -7,6 +7,7 @@ import {
   Post,
 } from '@nestjs/common';
 import { SitesService } from './sites.service.js';
+import { CreateSiteDto } from './dto/create-site.dto.js';
 
 @Controller('sites')
 export class SitesController {
@@ -24,12 +25,7 @@ export class SitesController {
   @Post()
   async publish(
     @Body()
-    body: {
-      address: string;
-      title: string;
-      html: string;
-      author: string;
-    },
+    body: CreateSiteDto,
   ) {
     return this.sitesService.create(body);
   }

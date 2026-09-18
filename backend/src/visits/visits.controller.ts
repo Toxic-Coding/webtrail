@@ -1,5 +1,6 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { VisitsService } from './visits.service.js';
+import { CreateVisitDto } from './dto/create-visit.dto.js';
 
 @Controller('visits')
 export class VisitsController {
@@ -7,7 +8,7 @@ export class VisitsController {
 
   @Post()
   async record(
-    @Body() body: { person: string; address: string; arrivedVia: string },
+    @Body() body: CreateVisitDto,
   ) {
     return this.visitsService.record(body);
   }
