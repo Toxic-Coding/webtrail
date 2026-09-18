@@ -53,4 +53,13 @@ export const api = {
 
   getHistory: (person: string) =>
     request<Visit[]>(`/visits/${encodeURIComponent(person)}`),
+
+    deleteVisit: (person: string, id: string) =>
+    request<{ deleted: number }>(`/visits/${encodeURIComponent(person)}/${id}`, { method: 'DELETE' }),
+
+  deleteVisits: (person: string, ids: string[]) =>
+    request<{ deleted: number }>(`/visits/${encodeURIComponent(person)}?ids=${ids.join(',')}`, { method: 'DELETE' }),
+
+  deleteVisitsByRange: (person: string, range: '15m' | '1h' | '24h' | 'all') =>
+    request<{ deleted: number }>(`/visits/${encodeURIComponent(person)}?range=${range}`, { method: 'DELETE' }),
 };

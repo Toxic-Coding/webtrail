@@ -28,7 +28,7 @@ export default function Browse() {
         <OmniBar size="compact" />
       </div>
       <div className="flex-1 p-4">
-        <div className="max-w-5xl mx-auto bg-white border border-[var(--line)] rounded-xl shadow-sm overflow-hidden">
+        <div className="max-w-full w-300 mx-auto bg-white border border-[var(--line)] rounded-xl shadow-sm overflow-hidden">
           <PageFrame />
         </div>
       </div>

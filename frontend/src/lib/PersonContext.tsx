@@ -1,15 +1,22 @@
-'use client';
+"use client";
 
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+} from "react";
 
 type PersonContextType = {
   person: string | null;
   setPerson: (name: string) => void;
+  logout: () => void;
 };
 
 const PersonContext = createContext<PersonContextType | null>(null);
 
-const STORAGE_KEY = 'webtrail-person';
+const STORAGE_KEY = "webtrail-person";
 
 export function PersonProvider({ children }: { children: ReactNode }) {
   const [person, setPersonState] = useState<string | null>(null);
@@ -24,8 +31,13 @@ export function PersonProvider({ children }: { children: ReactNode }) {
     setPersonState(name);
   }
 
+  function logout() {
+    sessionStorage.removeItem(STORAGE_KEY);
+    setPersonState(null);
+  }
+
   return (
-    <PersonContext.Provider value={{ person, setPerson }}>
+    <PersonContext.Provider value={{ person, setPerson, logout }}>
       {children}
     </PersonContext.Provider>
   );
@@ -33,6 +45,6 @@ export function PersonProvider({ children }: { children: ReactNode }) {
 
 export function usePerson() {
   const ctx = useContext(PersonContext);
-  if (!ctx) throw new Error('usePerson must be used within PersonProvider');
+  if (!ctx) throw new Error("usePerson must be used within PersonProvider");
   return ctx;
 }
