@@ -27,8 +27,8 @@ export default function Browse() {
       <div className="border-b border-[var(--line)] bg-white px-4 py-2">
         <OmniBar size="compact" />
       </div>
-      <div className="flex-1 p-4">
-        <div className="max-w-full w-300 mx-auto bg-white border border-[var(--line)] rounded-xl shadow-sm overflow-hidden">
+      <div className="flex-1">
+        <div className="w-full mx-auto h-[calc(100vh-100px)] bg-white overflow-hidden">
           <PageFrame />
         </div>
       </div>

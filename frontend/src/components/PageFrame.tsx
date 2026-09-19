@@ -48,7 +48,7 @@ export function PageFrame() {
       sandbox="allow-same-origin"
       srcDoc={site.html}
       onLoad={handleIframeLoad}
-      className="w-full h-[70vh] border-0"
+      className="w-full h-full border-0"
       title={site.title}
     />
   );
