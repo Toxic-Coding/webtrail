@@ -10,7 +10,7 @@ export default function PublishPage() {
   const router = useRouter();
 
   useEffect(() => {
-    if (!person) router.replace('/browse');
+    if (!person) router.replace('/s');
   }, [person, router]);
 
   if (!person) return null;
@@ -19,7 +19,7 @@ export default function PublishPage() {
     <main className="flex-1 px-4 py-8">
       <div className="max-w-xl mx-auto">
         <h1 className="font-serif text-2xl mb-4">Publish a new page</h1>
-        <PublishForm embedded onPublished={() => router.push('/browse')} />
+        <PublishForm embedded onPublished={() => router.push('/')} />
       </div>
     </main>
   );

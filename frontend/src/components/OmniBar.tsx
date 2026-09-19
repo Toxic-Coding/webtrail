@@ -40,7 +40,6 @@ export function OmniBar({ size = 'compact' }: { size?: 'large' | 'compact' }) {
     if (looksLikeAddress(value)) {
       setResults(null);
       navigate(value.toLowerCase(), 'typed');
-      if (pathname !== '/browse') router.push('/browse');
     } else {
       setSearching(true);
       const sites = await api.searchSites(value).catch(() => []);
@@ -53,7 +52,6 @@ export function OmniBar({ size = 'compact' }: { size?: 'large' | 'compact' }) {
     setResults(null);
     setInput(address);
     navigate(address, 'link');
-    if (pathname !== '/browse') router.push('/browse');
   }
 
   const large = size === 'large';

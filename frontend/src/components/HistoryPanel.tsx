@@ -29,7 +29,7 @@ export function HistoryPanel({ full = false }: { full?: boolean }) {
 
   function jumpTo(address: string) {
     navigate(address, 'history');
-    router.push('/browse');
+    router.push('/');
   }
 
   function toggleSelected(id: string) {

@@ -1,18 +1,19 @@
-'use client';
+"use client";
 
-import { createContext, useContext, useState, ReactNode } from 'react';
-import { api, ArrivedVia } from '@/lib/api';
-import { usePerson } from '@/lib/PersonContext';
+import { createContext, useContext, useState, ReactNode } from "react";
+import { api, ArrivedVia } from "@/lib/api";
+import { usePerson } from "@/lib/PersonContext";
 
 type BrowserContextType = {
-  history: string[];       // every address visited, in order
-  pointer: number;         // where we currently are in that list
+  history: string[]; // every address visited, in order
+  pointer: number; // where we currently are in that list
   currentAddress: string | null;
   canGoBack: boolean;
   canGoForward: boolean;
   navigate: (address: string, via: ArrivedVia) => void;
   goBack: () => void;
   goForward: () => void;
+  reset: () => void;
 };
 
 const BrowserContext = createContext<BrowserContextType | null>(null);
@@ -26,7 +27,7 @@ export function BrowserProvider({ children }: { children: ReactNode }) {
     if (!person) return;
     api.recordVisit({ person, address, arrivedVia: via }).catch(() => {
       // If recording fails, browsing still works — we just log it quietly.
-      console.error('Failed to record visit');
+      console.error("Failed to record visit");
     });
   }
 
@@ -43,14 +44,19 @@ export function BrowserProvider({ children }: { children: ReactNode }) {
     if (pointer <= 0) return;
     const newPointer = pointer - 1;
     setPointer(newPointer);
-    recordVisit(history[newPointer], 'back');
+    recordVisit(history[newPointer], "back");
   }
 
   function goForward() {
     if (pointer >= history.length - 1) return;
     const newPointer = pointer + 1;
     setPointer(newPointer);
-    recordVisit(history[newPointer], 'forward');
+    recordVisit(history[newPointer], "forward");
+  }
+
+  function reset() {
+    setHistory([]);
+    setPointer(-1);
   }
 
   return (
@@ -64,6 +70,7 @@ export function BrowserProvider({ children }: { children: ReactNode }) {
         navigate,
         goBack,
         goForward,
+        reset
       }}
     >
       {children}
@@ -73,6 +80,6 @@ export function BrowserProvider({ children }: { children: ReactNode }) {
 
 export function useBrowser() {
   const ctx = useContext(BrowserContext);
-  if (!ctx) throw new Error('useBrowser must be used within BrowserProvider');
+  if (!ctx) throw new Error("useBrowser must be used within BrowserProvider");
   return ctx;
 }

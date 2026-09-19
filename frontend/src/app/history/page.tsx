@@ -10,7 +10,7 @@ export default function HistoryPage() {
   const router = useRouter();
 
   useEffect(() => {
-    if (!person) router.replace('/browse');
+    if (!person) router.replace('/');
   }, [person, router]);
 
   if (!person) return null;

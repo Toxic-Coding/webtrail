@@ -3,17 +3,19 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { usePerson } from "@/lib/PersonContext";
+import { useBrowser } from "@/lib/BrowserContext";
 
 export function NavBar() {
   const pathname = usePathname();
+  const { reset } = useBrowser();
   const { person, logout } = usePerson();
-
   const linkClass = (path: string) =>
     `px-3 py-1.5 rounded-md text-sm font-medium ${
       pathname === path
         ? "bg-[var(--deep)] text-white"
         : "hover:bg-[var(--paper)]"
     }`;
+  if (!person) return null;
 
   return (
     <header className="sticky top-0 z-20 bg-white/90 backdrop-blur border-b border-[var(--line)] px-4 py-2 flex items-center gap-3">
@@ -24,7 +26,7 @@ export function NavBar() {
         WebTrail
       </Link>
       <nav className="flex items-center gap-1 shrink-0">
-        <Link href="/browse" className={linkClass("/browse")}>
+        <Link href="/" className={linkClass("/")}>
           Browse
         </Link>
         <Link href="/history" className={linkClass("/history")}>
@@ -42,7 +44,10 @@ export function NavBar() {
       )}
       {person && (
         <button
-          onClick={logout}
+          onClick={() => {
+            reset();
+            logout();
+          }}
           className="px-3 py-1.5 rounded-md text-sm font-medium hover:bg-[var(--paper)] cursor-pointer"
         >
           <svg
