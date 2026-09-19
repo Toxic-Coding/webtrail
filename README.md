@@ -49,6 +49,26 @@ npm run dev
 
 Runs on `http://localhost:3001`.
 
+
+## Troubleshooting: MongoDB connection times out (Windows)
+
+If `npm run start:dev` or `npm run seed` hangs or fails with a DNS/SRV
+lookup error (e.g. `querySrv ETIMEOUT`), your system's DNS resolver may
+not be resolving the `mongodb+srv://` SRV records correctly — this is
+a known issue on some Windows setups and networks.
+
+Fix: uncomment these two lines at the top of `main.ts` (or `scripts/seed.ts`):
+
+​```typescript
+import dns from 'node:dns';
+dns.setServers(['8.8.8.8', '1.1.1.1']);
+​```
+
+This forces Node to resolve DNS through Google/Cloudflare's public
+servers instead of your system default, which reliably supports the
+SRV lookups Atlas connection strings depend on. Not needed if your
+connection already works without it.
+
 ## Using it
 
 Open `http://localhost:3001`, pick a name, and either type an address (e.g. `tidepool.zz`) or search a word (e.g. `kelp`) into the bar.
